@@ -1,2 +1,2 @@
 # basic-todo
-Basic TODO made with Kotlin for experiments. 
+Basic TODO made with Kotlin for study and experiments. 
