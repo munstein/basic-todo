@@ -20,7 +20,4 @@ class DataAccess {
                 .openOrCreate("user", "password")
     }
 
-    private fun test(){
-        
-    }
 }
