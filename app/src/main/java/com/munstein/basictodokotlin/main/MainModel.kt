@@ -6,6 +6,7 @@ import com.munstein.basictodokotlin.data.NitriteDataAccess
 import com.munstein.basictodokotlin.model.Task
 import org.dizitart.no2.Cursor
 import org.dizitart.no2.Document
+import org.dizitart.no2.filters.Filters
 import org.dizitart.no2.filters.Filters.eq
 import org.dizitart.no2.mapper.JacksonMapper
 import org.dizitart.no2.mapper.NitriteMapper
@@ -27,20 +28,23 @@ class MainModel : MainMVP.model {
 
     override fun saveTask(task: Task) {
         var doc = nitriteMapper.parse(gson.toJson(task))
+        var x = doc.id
         dataAccess.tasksCollection.insert(doc)
     }
 
-    override fun unfavorite(task: Task) {
-
+    override fun removeTask(task: Task) {
+        var result = dataAccess.tasksCollection.find(eq("description", task.description))
+        dataAccess.tasksCollection.remove(result.firstOrDefault())
     }
 
-    override fun removeTask(task: Task) {
-        var doc = nitriteMapper.parse(gson.toJson(task))
-        dataAccess.tasksCollection.remove(doc)
+    override fun unfavorite(task: Task) {
+        dataAccess.tasksCollection.update(eq("description", task.description),
+                Document.createDocument("isFavorite", false))
     }
 
     override fun favorite(task: Task) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        dataAccess.tasksCollection.update(eq("description", task.description),
+                Document.createDocument("isFavorite", true))
     }
 
     override fun getTasks(): List<Task> {

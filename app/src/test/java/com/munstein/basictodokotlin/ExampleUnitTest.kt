@@ -9,7 +9,7 @@ import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
- *
+ * :D
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
@@ -17,32 +17,56 @@ class ExampleUnitTest {
     var data = NitriteDataAccess()
     var mainModel = MainModel(data)
 
-
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
-
-    @Test
-    fun add_select(){
-        var task = Task()
-        task.isFavorite = false;
-        task.description = "Hello nosql"
+    fun test_add_select(){
+        var task = Task("Hello NoSQL", false)
         mainModel.saveTask(task)
         var tasks =  mainModel.getTasks()
         assertEquals(task.description, tasks[0].description)
     }
 
     @Test
-    fun add_select_remove(){
-        var task = Task()
-        task.isFavorite = false;
-        task.description = "Hello nosql"
+    fun test_add_select_remove(){
+        var task = Task("Hello NoSQL", false)
         mainModel.saveTask(task)
         var tasks =  mainModel.getTasks()
         assertEquals(task.description, tasks[0].description)
-        mainModel.removeTask(task)
+        mainModel.removeTask(tasks[0])
         tasks = mainModel.getTasks()
         assertEquals(0, tasks.size)
     }
+
+    @Test
+    fun test_add_multiple(){
+        var total = 55
+        var task = Task("Hello NoSQL", false)
+
+        for (i in 1..total) mainModel.saveTask(task)
+
+        var tasks =  mainModel.getTasks()
+        assertEquals(total, tasks.size)
+    }
+
+    @Test
+    fun test_unfavorite(){
+        var task = Task("Hello NoSQL", true)
+        mainModel.saveTask(task)
+        var tasks =  mainModel.getTasks()
+        assertEquals(task.description, tasks[0].description)
+        mainModel.unfavorite(task)
+        tasks = mainModel.getTasks()
+        assertEquals(false, tasks[0].isFavorite)
+    }
+
+    @Test
+    fun test_favorite(){
+        var task = Task("Hello NoSQL", false)
+        mainModel.saveTask(task)
+        var tasks =  mainModel.getTasks()
+        assertEquals(task.description, tasks[0].description)
+        mainModel.favorite(task)
+        tasks = mainModel.getTasks()
+        assertEquals(true, tasks[0].isFavorite)
+    }
+
 }

@@ -3,14 +3,8 @@ package com.munstein.basictodokotlin.model
 /**
  * Created by @Munstein on 24/11/2017. --02:40
  */
-open class Task {
-    var description : String = ""
-    var isFavorite : Boolean = false
 
-    constructor()
-
-    constructor(description : String, isFavorite : Boolean){
-        this.description = description
-        this.isFavorite = isFavorite
-    }
+data class Task(var description: String, var isFavorite: Boolean){
+    //Parameter-less constructor for outside classes
+    constructor() : this("", false)
 }
