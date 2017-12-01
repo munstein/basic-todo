@@ -12,7 +12,7 @@ interface MainMVP {
         fun unfavorite(task : Task)
         fun removeTask(task : Task)
         fun favorite(task : Task)
-        fun getTasks(task : Task) : List<Task>
+        fun getTasks() : List<Task>
     }
 
     interface view{
