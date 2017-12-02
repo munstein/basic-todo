@@ -26,6 +26,7 @@ interface MainMVP {
         fun onUnfavorite()
         fun onAddTask()
         fun onRemoveTask()
+        fun getTasks() : List<Task>
     }
 
 }
