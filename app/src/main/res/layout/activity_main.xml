@@ -48,6 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_edit_task" />
+        app:layout_constraintTop_toBottomOf="@+id/main_edit_task"
+        android:focusable="true"/>
 
 </android.support.constraint.ConstraintLayout>

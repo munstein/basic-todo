@@ -17,15 +17,15 @@ interface MainMVP {
     }
 
     interface view{
-        fun updateView()
+        fun updateView(tasks : List<Task>)
         fun showMessage(msg : String)
     }
 
     interface presenter{
         fun onSetFavorite()
         fun onUnfavorite()
-        fun onAddTask()
-        fun onRemoveTask()
+        fun onAddTask(task : Task)
+        fun onRemoveTask(task : Task)
         fun getTasks() : List<Task>
     }
 

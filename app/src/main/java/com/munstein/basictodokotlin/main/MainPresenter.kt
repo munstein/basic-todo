@@ -24,17 +24,22 @@ class MainPresenter : MainMVP.presenter {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onAddTask() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onAddTask(task: Task) {
+        if(task.description.length>0){
+            model.saveTask(task)
+            view.updateView(model.getTasks())
+        }else{
+            view.showMessage("Please, type a task.")
+        }
     }
 
-    override fun onRemoveTask() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onRemoveTask(task: Task) {
+        model.removeTask(task)
+        view.updateView(model.getTasks())
     }
 
     override fun getTasks(): List<Task> {
         return model.getTasks()
     }
-
 
 }
