@@ -22,10 +22,10 @@ interface MainMVP {
     }
 
     interface presenter{
-        fun onSetFavorite()
-        fun onUnfavorite()
-        fun onAddTask(task : Task)
-        fun onRemoveTask(task : Task)
+        fun favoriteTask(task: Task)
+        fun unfavoriteTask(task: Task)
+        fun addTask(task : Task)
+        fun removeTask(task : Task)
         fun getTasks() : List<Task>
     }
 

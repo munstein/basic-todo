@@ -16,15 +16,15 @@ class MainPresenter : MainMVP.presenter {
         this.model = model
     }
 
-    override fun onSetFavorite() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun favoriteTask(task: Task) {
+        model.favorite(task)
     }
 
-    override fun onUnfavorite() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun unfavoriteTask(task: Task) {
+        model.unfavorite(task)
     }
 
-    override fun onAddTask(task: Task) {
+    override fun addTask(task: Task) {
         if(task.description.length>0){
             model.saveTask(task)
             view.updateView(model.getTasks())
@@ -33,7 +33,7 @@ class MainPresenter : MainMVP.presenter {
         }
     }
 
-    override fun onRemoveTask(task: Task) {
+    override fun removeTask(task: Task) {
         model.removeTask(task)
         view.updateView(model.getTasks())
     }
