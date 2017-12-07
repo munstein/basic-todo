@@ -40,32 +40,51 @@ class ExampleUnitTest {
         var total = 55
         var task = Task("Hello NoSQL", false)
 
-        for (i in 1..total) mainModel.saveTask(task)
+        for (i in 1..total){
+            task.description += i.toString()
+            mainModel.saveTask(task)
+        }
 
         var tasks = mainModel.getTasks()
         assertEquals(total, tasks.size)
     }
 
     @Test
-    fun test_unfavorite() {
+    fun test_add_task_with_same_description(){
+        var total = 3
+        var task = Task("Hello NoSQL", false)
+
+        for (i in 1..total){
+            mainModel.saveTask(task)
+        }
+
+        var tasks = mainModel.getTasks()
+        assertEquals(1, tasks.size)
+    }
+
+    @Test
+    fun test_changeFavoriteStatusToFalse() {
         var task = Task("Hello NoSQL", true)
         mainModel.saveTask(task)
         var tasks = mainModel.getTasks()
         assertEquals(task.description, tasks[0].description)
-        mainModel.unfavorite(task)
+        task.isFavorite = false
+        mainModel.changeFavoriteStatus(task)
         tasks = mainModel.getTasks()
         assertEquals(false, tasks[0].isFavorite)
     }
 
     @Test
-    fun test_favorite() {
+    fun test_changeFavoriteStatusToTrue() {
         var task = Task("Hello NoSQL", false)
         mainModel.saveTask(task)
         var tasks = mainModel.getTasks()
         assertEquals(task.description, tasks[0].description)
-        mainModel.favorite(task)
+        task.isFavorite = true
+        mainModel.changeFavoriteStatus(task)
         tasks = mainModel.getTasks()
         assertEquals(true, tasks[0].isFavorite)
     }
+
 
 }
