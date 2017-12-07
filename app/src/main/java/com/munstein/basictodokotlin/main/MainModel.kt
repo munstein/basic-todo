@@ -1,12 +1,9 @@
 package com.munstein.basictodokotlin.main
 
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.munstein.basictodokotlin.data.NitriteDataAccess
 import com.munstein.basictodokotlin.model.Task
-import org.dizitart.no2.Cursor
 import org.dizitart.no2.Document
-import org.dizitart.no2.filters.Filters
 import org.dizitart.no2.filters.Filters.eq
 import org.dizitart.no2.mapper.JacksonMapper
 import org.dizitart.no2.mapper.NitriteMapper
@@ -26,10 +23,14 @@ class MainModel : MainMVP.model {
         nitriteMapper = JacksonMapper()
     }
 
-    override fun saveTask(task: Task) {
+    override fun saveTask(task: Task) : Boolean{
         var doc = nitriteMapper.parse(gson.toJson(task))
-        var x = doc.id
-        dataAccess.tasksCollection.insert(doc)
+        var inserted = false
+        if(dataAccess.tasksCollection.find(eq("description", task.description)).count()==0){
+            dataAccess.tasksCollection.insert(doc)
+            inserted = true
+        }
+        return inserted
     }
 
     override fun removeTask(task: Task) {
@@ -55,6 +56,6 @@ class MainModel : MainMVP.model {
             list.add(nitriteMapper.asObject(document, Task::class.java))
         }
 
-        return list;
+        return list
     }
 }

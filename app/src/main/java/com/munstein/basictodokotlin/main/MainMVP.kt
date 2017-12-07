@@ -9,7 +9,7 @@ import com.munstein.basictodokotlin.model.Task
 interface MainMVP {
 
     interface model{
-        fun saveTask(task : Task)
+        fun saveTask(task : Task) : Boolean
         fun removeTask(task : Task)
         fun getTasks() : List<Task>
         fun favorite(task : Task)

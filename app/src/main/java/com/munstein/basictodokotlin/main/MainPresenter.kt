@@ -25,9 +25,13 @@ class MainPresenter : MainMVP.presenter {
     }
 
     override fun addTask(task: Task) {
-        if(task.description.length>0){
-            model.saveTask(task)
-            view.updateView(model.getTasks())
+        if(task.description.isNotEmpty()){
+            if(model.saveTask(task)){
+                view.updateView(model.getTasks())
+            }else{
+                view.showMessage("this task already exists")
+            }
+
         }else{
             view.showMessage("Please, type a task.")
         }
