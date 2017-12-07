@@ -29,7 +29,7 @@ class MainActivity : BaseActivity(), MainMVP.view, View.OnClickListener {
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         presenter = MainPresenter(this, MainModel(NitriteDataAccess(this.filesDir)))
         this.tasks = presenter.getTasks() as ArrayList<Task>
-        main_btn_add.setOnClickListener(this)
+        main_imgbtn_add.setOnClickListener(this)
         buildListview()
     }
 
@@ -38,12 +38,9 @@ class MainActivity : BaseActivity(), MainMVP.view, View.OnClickListener {
             view, checked ->
             var task = this.tasks[view.tag as Int]
             task.isFavorite = checked
-            if(checked){
-                presenter.favoriteTask(task)
-            }else{
-                presenter.unfavoriteTask(task)
-            }
+            presenter.changeFavoriteStatus(task)
         })
+
         registerForContextMenu(main_listview)
         main_listview.adapter = adapter
         main_listview.setOnCreateContextMenuListener { contextMenu, view, contextMenuInfo ->

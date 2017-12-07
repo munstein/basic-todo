@@ -4,6 +4,8 @@ import com.google.gson.Gson
 import com.munstein.basictodokotlin.data.NitriteDataAccess
 import com.munstein.basictodokotlin.model.Task
 import org.dizitart.no2.Document
+import org.dizitart.no2.FindOptions
+import org.dizitart.no2.SortOrder
 import org.dizitart.no2.filters.Filters.eq
 import org.dizitart.no2.mapper.JacksonMapper
 import org.dizitart.no2.mapper.NitriteMapper
@@ -38,24 +40,22 @@ class MainModel : MainMVP.model {
         dataAccess.tasksCollection.remove(result.firstOrDefault())
     }
 
-    override fun unfavorite(task: Task) {
+    override fun changeFavoriteStatus(task: Task) {
         dataAccess.tasksCollection.update(eq("description", task.description),
-                Document.createDocument("isFavorite", false))
-    }
-
-    override fun favorite(task: Task) {
-        dataAccess.tasksCollection.update(eq("description", task.description),
-                Document.createDocument("isFavorite", true))
+                Document.createDocument("isFavorite", task.isFavorite))
     }
 
     override fun getTasks(): List<Task> {
-        var results = dataAccess.tasksCollection.find()
+        var results = dataAccess.tasksCollection.find(FindOptions.sort("description", SortOrder.Ascending))
         var list = ArrayList<Task>()
 
         for (document in results) {
             list.add(nitriteMapper.asObject(document, Task::class.java))
         }
 
+        list.sortBy { item ->
+            item.isFavorite == false
+        }
         return list
     }
 }

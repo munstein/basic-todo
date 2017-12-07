@@ -12,8 +12,7 @@ interface MainMVP {
         fun saveTask(task : Task) : Boolean
         fun removeTask(task : Task)
         fun getTasks() : List<Task>
-        fun favorite(task : Task)
-        fun unfavorite(task : Task)
+        fun changeFavoriteStatus(task : Task)
     }
 
     interface view{
@@ -22,8 +21,7 @@ interface MainMVP {
     }
 
     interface presenter{
-        fun favoriteTask(task: Task)
-        fun unfavoriteTask(task: Task)
+        fun changeFavoriteStatus(task : Task)
         fun addTask(task : Task)
         fun removeTask(task : Task)
         fun getTasks() : List<Task>

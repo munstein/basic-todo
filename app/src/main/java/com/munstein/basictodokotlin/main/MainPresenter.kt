@@ -16,12 +16,9 @@ class MainPresenter : MainMVP.presenter {
         this.model = model
     }
 
-    override fun favoriteTask(task: Task) {
-        model.favorite(task)
-    }
-
-    override fun unfavoriteTask(task: Task) {
-        model.unfavorite(task)
+    override fun changeFavoriteStatus(task: Task) {
+        model.changeFavoriteStatus(task)
+        view.updateView(model.getTasks())
     }
 
     override fun addTask(task: Task) {
